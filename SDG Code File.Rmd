@@ -1,0 +1,72 @@
+---
+title: "Data Visualization"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    theme: paper
+    highlight: tango
+---
+
+
+```{r}
+
+#Load the required library
+library(tidyverse)
+
+#Read the data
+sdg <- read.csv("SDG Dataset.csv")
+attach(sdg)
+
+#Summarize the data
+summary(sdg)
+
+#Perform linear regression model
+reg = lm(sdg_index_score~goal_1_score + goal_2_score + goal_3_score + 
+           goal_4_score + goal_5_score + goal_6_score + goal_7_score +
+           goal_8_score+ goal_9_score + goal_10_score + goal_11_score +
+           goal_12_score + goal_13_score + goal_14_score + goal_15_score +
+           goal_16_score + goal_17_score, data = sdg)
+
+#Summary of the regression model:
+summary(reg)
+
+
+# Load ggplot2 library
+library(ggplot2)
+
+# Plot a scatter plot with the regression line
+scatter_plot <- ggplot(sdg, aes(x = goal_1_score, y = sdg_index_score)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = sdg_index_score ~ goal_1_score + goal_2_score + goal_3_score + 
+                goal_4_score + goal_5_score + goal_6_score + goal_7_score +
+                goal_8_score + goal_9_score + goal_10_score + goal_11_score +
+                goal_12_score + goal_13_score + goal_14_score + goal_15_score +
+                goal_16_score + goal_17_score, se = FALSE, color = "green")
+
+# Print the plot
+print(scatter_plot)
+
+
+#Decision Tree
+
+#Load required libraries- rpart and rpart.plot
+library(rpart)
+library(rpart.plot)
+
+#Perform a decision tree model
+model <- rpart( sdg_index_score ~ goal_1_score + goal_2_score + goal_3_score + 
+                  goal_4_score + goal_5_score + goal_6_score + goal_7_score +
+                  goal_8_score+ goal_9_score + goal_10_score + goal_11_score +
+                  goal_12_score + goal_13_score + goal_14_score + goal_15_score +
+                  goal_16_score + goal_17_score, data = sdg)
+
+# Plot the decision tree in green
+rpart.plot(model, box.palette = "Green")
+
+
+```
+
+
+
+
